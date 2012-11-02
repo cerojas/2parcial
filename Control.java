@@ -8,6 +8,7 @@ public class Control extends Thread{
 		public static int vidas=4;
 		public static int nivel=1;
 		public static int velocidad= 100;
+		public static boolean parar = false;
 		
 		public void run()
 		{	
@@ -28,11 +29,11 @@ public class Control extends Thread{
 					{
 						Flujo.linea1.set(i, ' ');
 						puntos +=1;
-						setNivel();
+					
 						break;
 					}
 				}
-				
+				setNivel();
 				if(!setVida()){break;}
 			}
 			
@@ -56,20 +57,41 @@ public class Control extends Thread{
 		
 		 public static void setNivel()
 		 {
-			 if(puntos == 5){ 
+			 if(puntos%5==0){ 
 				 nivel +=1;
+				 Control.parar= true;
+				
+				
+				 try {
+					sleep(1000);
+					System.out.println("FELICIDADES !!\nnivel "+Control.nivel+"\n");
+					Flujo.detalles();
+					Flujo.espacio(10);
+					sleep(4000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				 
-		        	Scanner lee = new Scanner(System.in);
-		        	System.out.println("GAME OVER !!\n");
-		        	System.out.println("desea continuar?");
-		        	Flujo.espacio(25);
-		        	lee.next();
-			 
-			 
-			 
-			 
+				 Control.parar= false; 
+				
 			 }
 		 }
+		 
+		 public static void esperar(int time, boolean hasta)
+		 {
+			 while(hasta)
+      		{
+      			try {sleep(time);}catch(Exception e){}
+      		}
+	
+		 }
+		 
+		 public static void esperar(int time)
+		 {	
+      		try {sleep(time);}catch(Exception e){}	
+		 }
+		 
 			
 		
 		

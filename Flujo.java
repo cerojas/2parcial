@@ -16,21 +16,31 @@ public class Flujo extends Thread {
 			lista();
 		}
 		
-		public static void lista()
+		public  void lista()
 		{
-        	
-        	//llenar la lista
-        	for (int i = 0; i <90; i++) {
-        		if(i<89){linea1.add(i, ' ');}
-        		else {linea1.add(i,abc(Control.nivel));}	
-			}        	
-        	
-        	espacio(50);
-        	
+			iniList();        	
+        	espacio(50);     	
         	printLista(linea1);
         	
         	while(true)
         	{
+        		if(Control.parar)
+        		{
+        			while(Control.parar){
+        			try {
+						sleep(5000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+        			}
+                	iniList();        	
+                	espacio(50);     	
+                	printLista(linea1);
+                	
+        		}
+        
+        		
         		//elimina la prira posicion y agrega a la ultima
         		linea1.remove(0);
         		linea1.add(89, abc(Control.nivel));
@@ -41,8 +51,7 @@ public class Flujo extends Thread {
         		espacio(15);
         		
         		//tiempo de espera
-        		try {sleep(Control.velocidad);} catch (InterruptedException e) {e.printStackTrace();}
-    
+        		Control.esperar(Control.velocidad);
         		espacio(50);
         		
         		//verifica si hay vidas
@@ -109,5 +118,13 @@ public class Flujo extends Thread {
         	System.out.println("desea continuar?");
         	espacio(25);
         	lee.next();
+		}
+		//llena la lista 
+		public static void iniList()
+		{
+			for (int i = 0; i <90; i++) {
+        		if(i<89){linea1.add(i, ' ');}
+        		else {linea1.add(i,abc(Control.nivel));}	
+			}
 		}
 }
